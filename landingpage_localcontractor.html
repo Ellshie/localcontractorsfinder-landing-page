@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Contractor Finder - Trusted Plumbers, HVAC & Electricians</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            navy: '#0f172a',
+                            blue: '#008081',
+                            light: '#f1f5f9',
+                            accent: '#f59e0b', // Amber for construction/warning/attention
+                            green: '#10b981'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .hero-gradient {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+        }
+        .form-success {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+         .lcf-logo-custom img { height: 30px !important; width: auto !important;  display: inline-block !important; }
+
+
+                .wpcf7-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .wpcf7-form input {
+            width: 100% !important;
+            padding: 0.75rem 1rem !important;
+            border: 1px solid #d1d5db !important;
+            border-radius: 0.375rem !important;
+            background-color: #f9fafb !important;
+        }
+        .wpcf7-submit {
+            background-color: #008081 !important;
+            color: white !important;
+            font-weight: 600 !important;
+            cursor: pointer !important;
+            transition: background 0.2s !important;
+            border: none !important;
+        }
+        .wpcf7-submit:hover {
+            background-color: #f59e0b !important;
+        }
+        /* This hides the "Processing" spin in your old script since CF7 has its own */
+        .wpcf7-spinner {
+            position: absolute;
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-800 antialiased bg-white">
+
+    <!-- Navigation -->
+    <nav class="bg-white border-b border-gray-100 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+            <div class="flex-shrink-0 flex items-center gap-3">
+            <a href="/" class="lcf-logo-custom">
+                <img
+                src="https://localcontractorsfinder.com/wp-content/uploads/2025/03/FINAL-1.png"
+                alt="Local Contractor Finder"
+                class="h-10 w-auto"
+                />
+                <span class="font-bold text-xl tracking-tight text-brand-navy">
+                Local Contractor Finder
+                </span>
+            </a>
+            </div>
+
+                <div class="hidden md:block">
+                <a
+                    href="#join-waitlist"
+                    class="bg-[#008081] hover:bg-[#f59e0b] text-white px-5 py-2.5 rounded-lg font-medium transition-colors duration-200"
+                >
+                    Get Notified
+                </a>
+                </div>
+
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative bg-white overflow-hidden lg:pt-10 pb-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:grid lg:grid-cols-12 lg:gap-8 items-center">
+                <!-- Text Content -->
+                <div class="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left">
+                    <div class="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 text-brand-blue text-sm font-semibold mb-6">
+                        <span class="flex h-2 w-2 rounded-full bg-brand-blue mr-2" style="color:teal;"></span>
+                        Rolling out nationwide
+                    </div>
+                    <h1 class="text-4xl tracking-tight font-extrabold text-brand-navy sm:text-5xl md:text-6xl lg:text-5xl xl:text-6xl">
+                        Find a Trusted Local
+                        <span class="text-brand-blue" style="color:teal;">Plumber, HVAC Tech, or Electrician</span>
+                    </h1>
+                    <p class="mt-4 text-lg text-gray-500 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
+                        Without guessing who’s legit — or who paid for the top spot. We're building a directory organized by location, not ads.
+                    </p>
+                    
+                    <!-- Hero Form -->
+                    <div class="mt-8 sm:max-w-lg sm:mx-auto sm:text-center lg:text-left lg:mx-0">
+                        <p class="text-base font-medium text-gray-900 mb-3">
+                            👉 Get notified when your area goes live.
+                        </p>
+                       
+                        <div id="hero-success" class="form-success mt-4 p-3 bg-green-50 text-green-700 rounded-md border border-green-200">
+                            <i class="fa-solid fa-check-circle mr-2"></i> Thanks! We'll verify your city and let you know when we're live.
+                        </div>
+                        <p class="mt-3 text-sm text-gray-400">
+                            Free for homeowners. No spam. No contractors contacting you.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Video / Visual Content -->
+                <div class="mt-12 relative sm:max-w-lg sm:mx-auto lg:mt-0 lg:max-w-none lg:mx-0 lg:col-span-6 lg:flex lg:items-center">
+                    <div class="relative mx-auto w-full rounded-2xl shadow-2xl lg:max-w-md overflow-hidden bg-gray-900 aspect-video group cursor-pointer border-4 border-white">
+                        <!-- Video Placeholder UI -->
+                        <div class="absolute inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 group-hover:bg-opacity-40 transition">
+                            <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-lg pl-1 group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-play text-brand-teal text-2xl"></i>
+                            </div>
+                        </div>
+                        <img src="https://images.unsplash.com/photo-1581094794329-cd1096d7a43f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Electrician working" class="w-full h-full object-cover opacity-80">
+                        <div class="absolute bottom-4 left-4 right-4 text-white text-sm font-medium bg-black/60 p-2 rounded backdrop-blur-sm">
+                            <i class="fa-solid fa-circle-play mr-2"></i> See how Local Contractor Finder works
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Problem Section -->
+    <section class="bg-gray-50 py-16 sm:py-24">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-base font-semibold text-brand-teal tracking-wide uppercase">The Problem</h2>
+            <p class="mt-2 text-3xl font-extrabold text-gray-900 sm:text-4xl">
+                When something breaks, the hardest part isn’t the repair.
+            </p>
+            <p class="mt-4 text-xl text-gray-500">
+                It’s figuring out who to trust. You search online and get:
+            </p>
+
+            <div class="mt-10 space-y-4 text-left max-w-lg mx-auto">
+                <div class="flex items-start">
+                    <div class="flex-shrink-0">
+                        <i class="fa-solid fa-circle-xmark text-red-500 text-xl mt-1"></i>
+                    </div>
+                    <p class="ml-4 text-lg text-gray-600">Paid listings disguised as recommendations</p>
+                </div>
+                <div class="flex items-start">
+                    <div class="flex-shrink-0">
+                        <i class="fa-solid fa-circle-xmark text-red-500 text-xl mt-1"></i>
+                    </div>
+                    <p class="ml-4 text-lg text-gray-600">Companies outside your area</p>
+                </div>
+                <div class="flex items-start">
+                    <div class="flex-shrink-0">
+                        <i class="fa-solid fa-circle-xmark text-red-500 text-xl mt-1"></i>
+                    </div>
+                    <p class="ml-4 text-lg text-gray-600">Outdated or questionable reviews</p>
+                </div>
+                <div class="flex items-start">
+                    <div class="flex-shrink-0">
+                        <i class="fa-solid fa-circle-xmark text-red-500 text-xl mt-1"></i>
+                    </div>
+                    <p class="ml-4 text-lg text-gray-600">Too many options — and no confidence</p>
+                </div>
+            </div>
+
+            <div class="mt-10 p-6 bg-white rounded-xl shadow-sm border border-gray-100 inline-block">
+                <p class="text-brand-navy font-semibold text-lg">
+                    So you pick… and hope. <span class="text-brand-teal">That’s the problem we’re fixing.</span>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution / Categories -->
+    <section class="py-16 sm:py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+                    A Better Way to Find Local Contractors
+                </h2>
+                <p class="mt-4 text-lg text-gray-500">
+                    Local Contractor Finder helps homeowners quickly find local pros without wading through ads, marketplaces, or guesswork.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Plumbers -->
+                <div class="relative group bg-white p-8 focus-within:ring-2 focus-within:ring-inset focus-within:ring-brand-teal rounded-2xl shadow-sm border border-gray-100 hover:shadow-lg transition">
+                    <div class="rounded-lg inline-flex p-3 bg-teal-50 text-brand-teal ring-4 ring-white">
+                        <i class="fa-solid fa-wrench text-2xl"></i>
+                    </div>
+                    <div class="mt-6">
+                        <h3 class="text-lg font-bold text-gray-900">Local Plumbers</h3>
+                        <p class="mt-2 text-sm text-gray-500">
+                            Find vetted pros for leaks, clogs, installs, and emergencies immediately.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- HVAC -->
+                <div class="relative group bg-white p-8 focus-within:ring-2 focus-within:ring-inset focus-within:ring-brand-teal rounded-2xl shadow-sm border border-gray-100 hover:shadow-lg transition">
+                    <div class="rounded-lg inline-flex p-3 bg-orange-50 text-orange-600 ring-4 ring-white">
+                        <i class="fa-solid fa-temperature-arrow-up text-2xl"></i>
+                    </div>
+                    <div class="mt-6">
+                        <h3 class="text-lg font-bold text-gray-900">HVAC Professionals</h3>
+                        <p class="mt-2 text-sm text-gray-500">
+                            Reliable technicians for AC repairs, furnace tune-ups, and full system replacements.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Electricians -->
+                <div class="relative group bg-white p-8 focus-within:ring-2 focus-within:ring-inset focus-within:ring-brand-teal rounded-2xl shadow-sm border border-gray-100 hover:shadow-lg transition">
+                    <div class="rounded-lg inline-flex p-3 bg-yellow-50 text-yellow-600 ring-4 ring-white">
+                        <i class="fa-solid fa-bolt text-2xl"></i>
+                    </div>
+                    <div class="mt-6">
+                        <h3 class="text-lg font-bold text-gray-900">Licensed Electricians</h3>
+                        <p class="mt-2 text-sm text-gray-500">
+                            Safety-first experts for upgrades, fixes, panel work, and lighting issues.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-12 text-center">
+                <div class="inline-flex items-center gap-6 text-gray-600 font-medium">
+                    <span class="flex items-center"><i class="fa-solid fa-check text-green-500 mr-2"></i> No signup to browse</span>
+                    <span class="flex items-center"><i class="fa-solid fa-check text-green-500 mr-2"></i> No fees for homeowners</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Differentiation / Comparison -->
+    <section class="bg-brand-navy py-16 sm:py-24 text-white"  style="background-color:#0f172a;">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
+                <div>
+                    <h2 class="text-3xl font-extrabold tracking-tight sm:text-4xl">
+                        How This Is Different From Google, Yelp, and Big Marketplaces
+                    </h2>
+                    <p class="mt-4 text-lg text-gray-300">
+                        This directory is designed to help you choose faster — and feel confident doing it. We stripped away the noise and the pay-to-play mechanics.
+                    </p>
+                    
+                    <!-- Stats / Momentum -->
+                    <div class="mt-8 p-6 bg-white/10 rounded-xl border border-white/20 backdrop-blur-sm">
+                        <div class="flex items-center gap-4">
+                            <i class="fa-solid fa-chart-line text-brand-accent text-3xl"></i>
+                            <div>
+                                <p class="text-sm font-semibold uppercase tracking-wider text-gray-300">Fast Expansion</p>
+                                <p class="text-xl font-bold">Adding 7,000–10,000 contractors every two weeks.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-10 lg:mt-0">
+                    <div class="bg-white rounded-2xl overflow-hidden shadow-2xl">
+                        <div class="px-6 py-8 sm:p-10">
+                            <h3 class="text-xl font-bold text-gray-900 mb-6">The Old Way vs. Our Way</h3>
+                            <ul class="space-y-4">
+                                <li class="flex items-start">
+                                    <div class="flex-shrink-0">
+                                        <i class="fa-solid fa-check text-green-500 mt-1"></i>
+                                    </div>
+                                    <p class="ml-3 text-base text-gray-700">Contractors aren't ranked by who pays the most</p>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="flex-shrink-0">
+                                        <i class="fa-solid fa-check text-green-500 mt-1"></i>
+                                    </div>
+                                    <p class="ml-3 text-base text-gray-700">Building coverage locally, not dumping random results</p>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="flex-shrink-0">
+                                        <i class="fa-solid fa-check text-green-500 mt-1"></i>
+                                    </div>
+                                    <p class="ml-3 text-base text-gray-700">No middlemen selling your info</p>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="flex-shrink-0">
+                                        <i class="fa-solid fa-check text-green-500 mt-1"></i>
+                                    </div>
+                                    <p class="ml-3 text-base text-gray-700">No flood of calls after you search</p>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="bg-gray-50 px-6 py-4 sm:px-10 border-t border-gray-100">
+                            <p class="text-sm text-gray-500 italic">
+                                "Finally, a directory that doesn't feel like a trap."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section id="join-waitlist" class="bg-white py-16 sm:py-24 border-t border-gray-100" >
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center" >
+            <div class="bg-brand-light rounded-3xl p-8 md:p-12 shadow-sm border border-gray-200" style="background-color: whitesmoke;">
+                <h2 class="text-3xl font-extrabold text-brand-navy sm:text-4xl">
+                    Get Early Access in Your Area
+                </h2>
+                <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
+                    Enter your email and we’ll let you know the moment local plumbers, HVAC techs, and electricians are available in your city.
+                </p>
+
+                <div class="mt-8 sm:max-w-md sm:mx-auto">
+                    [contact-form-7 id="646c732" title="Homeowners Waitlist"]
+                </div>
+
+                <div id="footer-success" class="form-success mt-6 p-4 bg-green-100 text-green-800 rounded-lg max-w-md mx-auto">
+                    <p class="font-bold">You're on the list!</p>
+                    <p class="text-sm">We'll email you when your zip code is active.</p>
+                </div>
+
+                <div class="mt-8 border-t border-gray-200 pt-6">
+                    <h4 class="text-sm font-bold text-gray-900 uppercase tracking-wide">A Quick Heads-Up</h4>
+                    <ul class="mt-4 space-y-2 text-sm text-gray-500 flex flex-col md:flex-row justify-center md:gap-6 md:space-y-0">
+                        <li class="flex items-center justify-center">
+                            <i class="fa-solid fa-shield-halved text-gray-400 mr-2"></i> We don't sell your info
+                        </li>
+                        <li class="flex items-center justify-center">
+                            <i class="fa-solid fa-user-lock text-gray-400 mr-2"></i> Contractors can't contact you first
+                        </li>
+                        <li class="flex items-center justify-center">
+                            <i class="fa-solid fa-list-ul text-gray-400 mr-2"></i> Directory, not a lead market
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+<footer class="bg-white border-t border-gray-100">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    
+    <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+      
+      <!-- Logo + Brand -->
+      <div class="lcf-logo-custom">
+        <img
+          src="https://localcontractorsfinder.com/wp-content/uploads/2025/03/FINAL-1.png"
+          alt="Local Contractor Finder"
+          class="h-10 w-auto"
+        />
+        <span class="font-bold text-lg text-brand-navy">
+          Local Contractor Finder
+        </span>
+      </div>
+
+      <!-- Tagline -->
+      <p class="text-center text-sm text-gray-500 max-w-md">
+        Finding a good contractor shouldn’t feel like a gamble.
+      </p>
+
+      <!-- Copyright -->
+      <p class="text-sm text-gray-400 text-center md:text-right">
+        © 2024 Local Contractor Finder. All rights reserved.
+      </p>
+
+    </div>
+  </div>
+</footer>
+
+
+    <script>
+        function handleFormSubmit(event, successId) {
+            event.preventDefault();
+            const button = event.target.querySelector('button');
+            const originalText = button.innerHTML;
+            
+            // Simulate loading
+            button.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Processing...';
+            button.disabled = true;
+            button.classList.add('opacity-75');
+
+            setTimeout(() => {
+                // Hide form inputs (optional, keeping them visible here but showing success message)
+                const successMessage = document.getElementById(successId);
+                successMessage.style.display = 'block';
+                
+                // Reset button
+                button.innerHTML = '<i class="fa-solid fa-check"></i> Registered';
+                button.classList.remove('bg-brand-accent', 'hover:bg-amber-600');
+                button.classList.add('bg-green-600');
+                
+                // Reset form fields
+                event.target.reset();
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
